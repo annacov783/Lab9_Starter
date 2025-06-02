@@ -69,21 +69,21 @@
     </form>
 
     <section id="error-btns">
-      <button>Console Log</button>
-      <button>Console Error</button>
-      <button>Console Count</button>
-      <button>Console Warn</button>
-      <button>Console Assert</button>
-      <button>Console Clear</button>
-      <button>Console Dir</button>
-      <button>Console dirxml</button>
-      <button>Console Group Start</button>
-      <button>Console Group End</button>
-      <button>Console Table</button>
-      <button>Start Timer</button>
-      <button>End Timer</button>
-      <button>Console Trace</button>
-      <button>Trigger a Global Error</button>
+      <button id="log">Console Log</button>
+      <button id="error">Console Error</button>
+      <button id="count">Console Count</button>
+      <button id="warn">Console Warn</button>
+      <button id="assert">Console Assert</button>
+      <button id="clear">Console Clear</button>
+      <button id="dir">Console Dir</button>
+      <button id="dirxml">Console dirxml</button>
+      <button id="start">Console Group Start</button>
+      <button id="end">Console Group End</button>
+      <button id="table">Console Table</button>
+      <button id="time-start">Start Timer</button>
+      <button id="time-end">End Timer</button>
+      <button id="trace">Console Trace</button>
+      <button id="global-error">Trigger a Global Error</button>
     </section>
   </main>
 
@@ -95,13 +95,104 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
-      output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+
+      try {
+        const result = eval(`${firstNum} ${operator} ${secondNum}`);
+
+        if(result == Infinity || result == -Infinity) {
+          throw new Error("Result was either infinity or negative infinity");
+        }
+        output.innerHTML = result;
+      }
+      catch(err) {
+        console.error("invalid result: ", err);
+        output.innerHTML = err;
+      }
+      finally {
+        console.log("Resolve error");
+      }
     });
 
     let errorBtns = Array.from(document.querySelectorAll('#error-btns > button'));
 
     // Start your code here
     // You may move this JS to another file if you wish
+    
+    const logBtn = document.getElementById("log");
+    logBtn.addEventListener("click", function() {
+      console.log("Console Log Demo");
+    });
+
+    const errorBtn = document.getElementById("error");
+    errorBtn.addEventListener("click", function() {
+      console.error("Console Error Demo");
+    });
+
+    const countBtn = document.getElementById("count");
+    countBtn.addEventListener("click", function() {
+      console.count('Count Button: ');
+    });
+
+    const warnBtn = document.getElementById("warn");
+    warnBtn.addEventListener("click", function() {
+      console.warn("Console Warn Button");
+    });
+
+    const assertBtn = document.getElementById("assert");
+    assertBtn.addEventListener("click", function() {
+      let a = 2
+      console.assert(a == 4, "expected value of variable a does not match received value");
+    });
+
+    const clearBtn = document.getElementById("clear");
+    clearBtn.addEventListener("click", function() {
+      console.clear();
+    });
+
+    const dirBtn = document.getElementById("dir");
+    dirBtn.addEventListener("click", function() {
+      console.dir(dirBtn);
+    });
+
+    const dirxmlBtn = document.getElementById("dirxml");
+    dirxmlBtn.addEventListener("click", function() {
+      console.dirxml(errorBtns);
+    });
+    
+    const startBtn = document.getElementById("start");
+    startBtn.addEventListener("click", function() {
+      console.group();
+    });
+
+    const endBtn = document.getElementById("end");
+    endBtn.addEventListener("click", function() {
+      console.groupEnd();
+    });
+
+    const tableBtn = document.getElementById("table");
+    tableBtn.addEventListener("click", function() {
+      console.table([
+        {name: "first", age: 1},
+        {name: "second", age: 2},
+        {name: "third", age: 3}
+      ]);
+    });
+
+    const timeStartBtn = document.getElementById("time-start");
+    timeStartBtn.addEventListener("click", function() {
+      console.time("Timer Button: ");
+    });
+
+    const timeEndBtn = document.getElementById("time-end");
+    timeEndBtn.addEventListener("click", function() {
+      console.timeEnd("Timer Button: ");
+    });
+
+    const traceBtn = document.getElementById("trace");
+    traceBtn.addEventListener("click", function() {
+      console.trace("Console Trace Button");
+    });
+    
   </script>
 </body>
 
