@@ -96,11 +96,18 @@
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
 
+      class ValidationError extends Error {
+        constructor(message) {
+          super(message);
+          this.name = "ValidationError";
+        }
+      }
+
       try {
         const result = eval(`${firstNum} ${operator} ${secondNum}`);
 
         if(result == Infinity || result == -Infinity) {
-          throw new Error("Result was either infinity or negative infinity");
+          throw new ValidationError("Result was either infinity or negative infinity");
         }
         output.innerHTML = result;
       }
