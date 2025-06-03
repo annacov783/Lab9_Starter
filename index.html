@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+<script>
+  window.TrackJS && TrackJS.install({ 
+    token: "65e7ff8ba2d944daa326f673d463e18a"
+    // for more configuration options, see https://docs.trackjs.com
+  });
+</script>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,6 +94,7 @@
     </section>
   </main>
 
+
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -95,6 +103,8 @@
       let firstNum = document.querySelector('#first-num').value;
       let secondNum = document.querySelector('#second-num').value;
       let operator = document.querySelector('#operator').value;
+
+      TrackJS.track();
 
       class ValidationError extends Error {
         constructor(message) {
@@ -198,6 +208,17 @@
     const traceBtn = document.getElementById("trace");
     traceBtn.addEventListener("click", function() {
       console.trace("Console Trace Button");
+    });
+
+    window.onerror = function(errmessage, url, lineNumber) {
+      console.error("Global Error ->", errmessage, "at: ", url, "line: ", lineNumber);
+
+      return true;
+    }
+
+    const globalErrorBtn = document.getElementById("global-error");
+    globalErrorBtn.addEventListener("click", function() {
+      boom();
     });
     
   </script>
